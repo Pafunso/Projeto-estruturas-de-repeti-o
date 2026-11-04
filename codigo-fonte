@@ -1,0 +1,96 @@
+
+#include <stdio.h>
+
+int main() {
+    float limite, temperatura;
+    float soma = 0, media;
+    float maior, menor;
+    int quantidade = 0;
+    int consecutivas = 0;
+    int acima = 0;
+
+  
+    do {
+        printf("Digite o limite maximo de temperatura: ");
+
+        if (scanf("%f", &limite) != 1) {
+            printf("Entrada invalida! Digite um numero.\n");
+            while (getchar() != '\n');
+            limite = -1;
+        }
+
+        if (limite < 0) {
+            printf("O limite deve ser maior ou igual a zero.\n");
+        }
+
+    } while (limite < 0);
+
+    printf("\n--- MONITORAMENTO DE TEMPERATURA ---\n");
+
+  
+    printf("Digite a temperatura: ");
+    while (scanf("%f", &temperatura) != 1 || temperatura < 0) {
+        printf("Temperatura invalida! Digite novamente: ");
+        while (getchar() != '\n');
+    }
+
+    maior = temperatura;
+    menor = temperatura;
+
+  
+    while (1) {
+
+        quantidade++;
+        soma += temperatura;
+
+       
+        if (temperatura > maior) {
+            maior = temperatura;
+        }
+
+        if (temperatura < menor) {
+            menor = temperatura;
+        }
+
+       
+        if (temperatura > limite) {
+            acima++;
+            consecutivas++;
+
+            printf("ALERTA! Temperatura acima do limite!\n");
+
+        } else {
+            consecutivas = 0;
+        }
+
+      
+        if (consecutivas == 3) {
+            printf("\nALERTA CRITICO! Tres temperaturas consecutivas acima do limite.\n");
+            break;
+        }
+
+     
+        printf("\nDigite a proxima temperatura: ");
+
+        while (scanf("%f", &temperatura) != 1 || temperatura < 0) {
+            printf("Entrada invalida! Digite novamente: ");
+            while (getchar() != '\n');
+        }
+    }
+
+  
+    media = soma / quantidade;
+
+    printf("\n===== RELATORIO FINAL =====\n");
+    printf("Quantidade de leituras: %d\n", quantidade);
+    printf("Maior temperatura: %.2f\n", maior);
+    printf("Menor temperatura: %.2f\n", menor);
+    printf("Media das temperaturas: %.2f\n", media);
+    printf("Temperaturas acima do limite: %d\n", acima);
+    printf("Percentual acima do limite: %.2f%%\n",
+           (float)acima / quantidade * 100);
+
+    printf("\nMonitoramento encerrado.\n");
+
+    return 0;
+}
